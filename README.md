@@ -1,7 +1,7 @@
 ## SQL Queries on AdventureWorks Dataset
 ### Create an View
  ```sql
- Create or alter view dbo.employees
+  Create or alter view dbo.employees
   as
     select 
     emp.BusinessEntityID , 
@@ -9,7 +9,7 @@
     emp.BirthDate , 
     emp.HireDate , 
     emp.MaritalStatus , 
-    dep.Name , 
+    dep.Name as department_name, 
     p.FirstName , 
     p.LastName , 
     p.PersonType  ,
