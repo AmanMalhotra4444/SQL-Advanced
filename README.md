@@ -1,5 +1,5 @@
 ## SQL Queries on AdventureWorks Dataset
-### Create an View
+### Create View
  ```sql
   Create or alter view dbo.employees
   as
