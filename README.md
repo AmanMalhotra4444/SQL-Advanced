@@ -44,5 +44,24 @@ select @avg_salary = AVG(salary) from dbo.employees
 
 select * from dbo.employees where salary > @avg_salary
 ```
+### Employees with Salaries Higher Than Their Departmental Average 
+```sql
+With CTE as (
+
+Select 
+BusinessEntityID , FirstName , LastName ,salary ,  Department_name ,
+AVG(salary) over(partition by department_name) as avg_salary_by_department
+from dbo.employees )
+
+select BusinessEntityID , 
+	   FirstName , 
+	   LastName ,
+	   salary ,  
+	   Department_name 
+from cte where salary > avg_salary_by_department
+order by Department_name
+```
+
+
 
 
