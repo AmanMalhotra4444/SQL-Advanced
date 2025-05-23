@@ -73,6 +73,28 @@ where emp.BusinessEntityID = p.BusinessEntityID
 and month(emp.BirthDate) = month(GETDATE())
 and DAY(emp.BirthDate) = DAY(GETDATE())
 ```
+### Create a procedure with two parameters Mobile No. and Account No. in order to get the purchase history of Customer
+```sql
+Create procedure customer_purchase_history @phone_number varchar(15) , @AccountNumber varchar(15)
+as
+begin
+Select 
+	c.[AccountNumber] , 
+	CONCAT(p.FirstName ,' ' , p.LastName) as Customer_name ,
+	sales.OrderDate,
+	pp.PhoneNumber  ,
+	prod.name as product
+	from Sales.Customer c
+	left join Person.Person p on p.BusinessEntityID = c.PersonID
+	left join Person.PersonPhone pp on p.BusinessEntityID = pp.BusinessEntityID
+	left join Sales.SalesOrderHeader sales on sales.CustomerID = c.CustomerID
+	left join Sales.SalesOrderDetail salesdetail on salesdetail.SalesOrderID = sales.SalesOrderID
+	left join Production.Product prod on prod.ProductID = salesdetail.productId
+where p.BusinessEntityID = c.PersonID
+and pp.PhoneNumber = @phone_number and c.AccountNumber = @AccountNumber
+end
+```
+
 ### Running Total With Percentage
 ```sql
 Select orderdate , 
