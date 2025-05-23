@@ -61,6 +61,28 @@ select BusinessEntityID ,
 from cte where salary > avg_salary_by_department
 order by Department_name
 ```
+### Running Total With Percentage
+```sql
+Select orderdate , 
+		Sales,
+		SUM(sales) over() as overall_sales,
+		Round(cast(Sales as float) * 100 / SUM(sales) over(),2) as percentage_of_overall_sales , 
+
+		SUM(sales) over(partition by year(orderdate)) as overall_sales_by_year,
+		Round(cast(Sales as float) * 100 / SUM(sales) over(partition by year(orderdate)),2) as percentage_of_overall_sales_by_year,
+
+		SUM(sales) over(order by orderdate) as commulative_Sales,
+		Round(SUM(cast(sales as float)) over(order by orderdate)*100 / SUM(sales)over() ,2) as commulative_sales_percentage ,
+
+		SUM(sales) over(partition by year(orderdate) order by orderdate) as commulative_Sales_by_year,
+		Round(SUM(cast(sales as float)) over(partition by year(orderdate) order by orderdate)*100 / SUM(sales)over(partition by year(orderdate)) ,2) as commulative_sales_percentage_by_year 
+
+from dbo.Sales
+order by ORDERDATE
+```
+
+
+
 
 
 
