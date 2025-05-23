@@ -37,4 +37,12 @@ select BusinessEntityID ,
 from cte where _rank = 2
 order by Department_name
 ```
+### Show all the records where salary is higher than the average salary (using variable)
+```sql
+declare @avg_salary  int
+select @avg_salary = AVG(salary) from dbo.employees
+
+select * from dbo.employees where salary > @avg_salary
+```
+
 
