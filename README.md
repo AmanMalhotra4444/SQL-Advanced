@@ -61,6 +61,18 @@ select BusinessEntityID ,
 from cte where salary > avg_salary_by_department
 order by Department_name
 ```
+### Retrieve the BirthDate, Full Name, and Age of employees whose birthday is today.
+```sql
+Select emp.BusinessEntityID , 
+		emp.BirthDate , 
+		CONCAT(P.FirstName , ' ', P.MiddleName, ' ',p.LastName) as 'Full Name', 
+		Datediff(year,BirthDate,cast(GETDATE() as date)) as Age
+from HumanResources.Employee emp
+cross join Person.Person p
+where emp.BusinessEntityID = p.BusinessEntityID
+and month(emp.BirthDate) = month(GETDATE())
+and DAY(emp.BirthDate) = DAY(GETDATE())
+```
 ### Running Total With Percentage
 ```sql
 Select orderdate , 
