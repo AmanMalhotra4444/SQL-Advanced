@@ -80,8 +80,15 @@ Select orderdate ,
 from dbo.Sales
 order by ORDERDATE
 ```
-
-
+### Calculation of Moving Average and Rolling Average 
+```sql
+Select orderdate , 
+		Sales,
+		AVG(sales) over(order by orderdate rows between 2 preceding and current row) as moving_avg,
+		AVG(Sales) over(order by orderdate rows between 1 preceding and 1 following) as rolling_avg
+from dbo.Sales
+order by ORDERDATE 
+```
 
 
 
