@@ -87,7 +87,24 @@ Select orderdate ,
 		AVG(sales) over(order by orderdate rows between 2 preceding and current row) as moving_avg,
 		AVG(Sales) over(order by orderdate rows between 1 preceding and 1 following) as rolling_avg
 from dbo.Sales
-order by ORDERDATE 
+order by ORDERDATE
+```
+### Month over month Change in Sales
+```sql
+with CTE as (
+Select 
+	YEAR(orderdate) as _year,
+	month(orderdate) as _month , 
+	Sum(Sales) as sales
+From dbo.Sales
+group by 
+	YEAR(orderdate),
+	month(orderdate)) 
+
+select * , 
+Sales - LAG(sales) over(order by _year , _month ) as Month_over_Month_Change
+from CTE
+order by _year, _month
 ```
 
 
